@@ -7,12 +7,14 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
+    private final HistoryService historyService;
     @Getter
     private final Map<Integer, BookEntry> cart = new HashMap<>();
     private final BookRepository bookRepository;
@@ -59,6 +61,7 @@ public class CartService {
     }
 
     public Boolean clear() {
+        historyService.onClear(cart);
         cart.clear();
         return true;
     }
@@ -77,6 +80,7 @@ public class CartService {
             bookRepository.save(book);
         }
 
+        historyService.onBuy(cart);
         cart.clear();
 
         return true;
