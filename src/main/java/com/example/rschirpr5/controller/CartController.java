@@ -4,10 +4,7 @@ import com.example.rschirpr5.model.BookEntry;
 import com.example.rschirpr5.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -22,7 +19,7 @@ public class CartController {
         return cartService.getCart();
     }
 
-    @GetMapping("add")
+    @PostMapping("add")
     public String addBooks(@RequestParam Integer id, @RequestParam Integer amount) {
         if (cartService.addBooks(id, amount)) {
             return "Books successfully added";
